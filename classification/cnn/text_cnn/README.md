@@ -92,7 +92,6 @@
         遍历数据并对每次遍历数据调用train_step函数，并定期打印模型评价和检查点
     3.16 用tensorboard进行结果可视化
         python tensorflow/tensorboard/tensorboard.py --logdir=path/to/log-directory
-        问题是没找到tensorboard.py文件，找了半天发现在/home/pyx/.local/lib/python3.5/site-package/tensorflow中，但是报warming，可以忽略
     3.17 本实验的几个问题
         训练的指标不是平滑的，原因是我们每个批处理的数据过少
         训练集正确率过高，测试集正确率过低，过拟合。
