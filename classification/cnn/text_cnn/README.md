@@ -1,10 +1,8 @@
-# Created on 2017年05月15日
+# 中文文档
 
-# author: MJ
-
-# project: text_cnn
-
-# 中文文档:
+    * Created on 2017年05月15日
+    * author: MJ
+    * project: text
 
 本项目是在原有的代码基础上进行适当的修改，并添加一些中文注释，方便广大读者理解TextCNN模型的使用
 
