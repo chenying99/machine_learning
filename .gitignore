@@ -1,0 +1,4 @@
+# Created by .ignore support plugin (hsz.mobi)
+.idea/
+*.pyc
+/classification/cnn/text_cnn/data/model/runs
