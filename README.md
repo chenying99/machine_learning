@@ -3,6 +3,9 @@
     * Created on 2017年05月15日
     * author: MJ
     * project: machine_learning
+    * 本人会陆续将自己使用过的机器学习算法示例进行整理,放在此项目,欢迎各位读者挑错指正,如果你想与更多的小伙伴们交流,可以加以下几个QQ群:
+        TensorFlow深度学习交流NLP群(299814789)
+        TensorFlow深度学习交流CV群(397163918)
 
 
 ## 项目依赖
