@@ -18,7 +18,7 @@
 
 ## 1. 数据和预处理
     数据集：电影评论数据(Movie Review data from Rotten Tomatoes),包含5331个积极评论和5331个消极评论，同时包含一个20k的词表
-    注意：数据集过小容易过拟合，可以进行10交叉验证
+    注意：数据集过小容易过拟合，可以使用10%的训练数据进行交叉验证
     步骤：
         (1) 加载两类数据
         (2) 文本数据清洗
@@ -36,13 +36,20 @@
         (2) 不对权重向量强制执行L2正规化
         (3) 原paper使用静态词向量和非静态词向量两个同道作为输入，这里只使用一种同道作为输入
 ## 3. 实现
-    3.1 TextCNN类，参数如下：
-        sequence_length：句子长度，把每个句子统一填充到59个单词
-        num_classes：输出的类型个数，这里是积极和消极两类
-        vocab_size：词典长度，需要在嵌入层定义
-        embeding_size ：嵌入的维度
+    3.1 TextCNN类，config参数如下：
         filter_sizes：卷积核的高度
         num_filters：每种不同大小的卷积核的个数，这里每种有3个
+        embedding_dim ：嵌入的维度
+        num_classes：输出的类型个数，这里是积极和消极两类
+        dropout_keep_prob：保留一个神经元的概率，这个概率只在训练的时候用到
+        initial_learning_rate：初始的学习率
+        min_learning_rate：学习率最小值
+        decay_rate：学习率衰减率
+        decay_step：学习率衰减步长
+        batch_size：每批读入样本的数量
+        num_step：句子长度，把每个句子统一填充到最大长度
+        l2_reg_lambda：L2 正则项的参数lambda
+        vocabulary_size：词典长度，需要在嵌入层定义
     3.2 输入占位符（定义我们要传给网络的数据）
         如输入占位符，输出占位符和dropout占位符
         tf.placeholder创建一个占位符，在训练和测试时才会传入相应的数据
@@ -80,18 +87,18 @@
         tensorflow提供了几种自带的优化器，我们使用Adam优化器求loss的最小值
         train_op就是训练步骤，每次更新我们的参数，global_step用于记录训练的次数，在tensorflow中自增
     3.11 summaries汇总
-        tensorflow提供了各方面的汇总信息，方便跟踪和可视化训练和预测的过程。summaries是一个序列化的对象，通过SummaryWriter写入到光盘
+        tensorflow提供了各方面的汇总信息，方便跟踪和可视化训练和预测的过程。summaries是一个序列化的对象，通过tf.summary.FileWriter写入到光盘
     3.12 checkpointing检查点
         用于保存训练参数，方便选择最优的参数，使用tf.train.saver()进行保存
     3.13 变量初始化
-        sess.run(tf.initialize_all_variables())，用于初始化所有我们定义的变量，也可以对特定的变量手动调用初始化，如预训练好的词向量
+        sess.run(tf.global_variables_initializer())，用于初始化所有我们定义的变量，也可以对特定的变量手动调用初始化，如预训练好的词向量
     3.14 定义单一的训练步骤
         feed_dict中包含了我们在网络中定义的占位符的数据，必须要对所有的占位符进行赋值，否则会报错
         train_op不返回结果，只是更新网络的参数
     3.15 训练循环
         遍历数据并对每次遍历数据调用train_step函数，并定期打印模型评价和检查点
     3.16 用tensorboard进行结果可视化
-        python tensorflow/tensorboard/tensorboard.py --logdir=path/to/log-directory
+        tensorboard --logdir=path/to/log-directory
     3.17 本实验的几个问题
         训练的指标不是平滑的，原因是我们每个批处理的数据过少
         训练集正确率过高，测试集正确率过低，过拟合。

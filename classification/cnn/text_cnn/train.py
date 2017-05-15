@@ -37,9 +37,9 @@ def train():
     tf.flags.DEFINE_string("filter_sizes", "3,4,5", "Comma-separated filter sizes (default: '3,4,5')")
     # num_filters, 每个尺寸下的卷积核的个数, 默认为128
     tf.flags.DEFINE_integer("num_filters", 128, "Number of filters per filter size (default: 128)")
-    # dropout_keep_prob是保留一个神经元的概率，这个概率只在训练的时候用到, 默认为0.5
+    # dropout_keep_prob, 保留一个神经元的概率，这个概率只在训练的时候用到, 默认为0.5
     tf.flags.DEFINE_float("dropout_keep_prob", 0.5, "Dropout keep probability (default: 0.5)")
-    # L2 正则项的参数lambda,默认为0.0
+    # l2_reg_lambda, L2 正则项的参数lambda,默认为0.0
     tf.flags.DEFINE_float("l2_reg_lambda", 0.0, "L2 regularizaion lambda (default: 0.0)")
     # batch_size, 每批读入样本的数量,默认为64
     tf.flags.DEFINE_integer("batch_size", 64, "Batch Size (default: 64)")
