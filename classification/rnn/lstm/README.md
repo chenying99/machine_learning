@@ -27,7 +27,19 @@
     3、训练word2vec
         python word2vec/train.py train_sogou_classification_word2vec
     4、训练模型
-        python classification/rnn/lstm/train.py
+        lstm模型: python classification/rnn/lstm/train.py lstm
+        输出示例:
+        Valid, step 3700, lr 0.000512, loss 0.727028, acc 0.843
+        epoch 99
+        Train, epoch 99, step 3710, lr 0.000512, loss 0.157416, acc 0.952, step-time 1.21417, examples/sec 411.805
+        Train, epoch 99, step 3720, lr 0.000512, loss 0.117503, acc 0.96, step-time 1.36502, examples/sec 366.294
+        Train, epoch 99, step 3730, lr 0.000512, loss 0.200994, acc 0.946, step-time 1.36577, examples/sec 366.093
+        epoch 100
+        Train, epoch 100, step 3740, lr 0.000512, loss 0.163862, acc 0.948, step-time 0.152858, examples/sec 3271.02
+        Train, epoch 100, step 3750, lr 0.000512, loss 0.173707, acc 0.952, step-time 1.36271, examples/sec 366.916
+        Train, epoch 100, step 3760, lr 0.000512, loss 0.123907, acc 0.964, step-time 1.36246, examples/sec 366.983
+        Train, epoch 100, step 3770, lr 0.000512, loss 0.136535, acc 0.96, step-time 1.36065, examples/sec 367.471
+        bi_lstm模型: python classification/rnn/lstm/train.py bi_lstm
     5、预测
         注: 先在eval.py中设置checkpoint_dir的路径
         python classification/rnn/lstm/predict.py

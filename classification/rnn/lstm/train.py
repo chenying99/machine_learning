@@ -21,7 +21,7 @@ from classification.rnn.lstm.bi_lstm import BiLSTM
 from word2vec.word2vec_by_gensim_utils import get_word_2_vec_by_gensim_for_sogou_classification
 
 
-def train():
+def train(model_name):
     # 1、设置参数
     # num_classes, 分类的类别
     tf.flags.DEFINE_integer('num_classes', 9, 'class num')
@@ -50,7 +50,7 @@ def train():
     # max_grad_norm, 梯度最大值, 超过则阶段, 默认为5
     tf.flags.DEFINE_integer('max_grad_norm', 5, 'max_grad_norm')
     # num_epochs, 每次训练读取的数据随机的次数,默认为10
-    tf.flags.DEFINE_integer("num_epochs", 100, "Number of training epochs (default: 10)")
+    tf.flags.DEFINE_integer("num_epochs", 1000, "Number of training epochs (default: 10)")
     # valid_num, 训练数据中, 用于验证数据的数量
     tf.flags.DEFINE_integer('valid_num', 1000, 'num of validation')
     # show_every, 在每个固定迭代次数之后,输出结果
@@ -125,8 +125,13 @@ def train():
     with graph.as_default(), tf.Session() as sess:
         initializer = tf.random_uniform_initializer(-1 * FLAGS.init_scale, 1 * FLAGS.init_scale)
         with tf.variable_scope("model", initializer=initializer):
-            model = LSTM(config=config)
-            # model = BiLSTM(config=config)
+            if 'lstm' == model_name:
+                model = LSTM(config=config)
+            elif 'bi_lstm' == model_name:
+                model = BiLSTM(config=config)
+            else:
+                print ('Please input args: lstm or bi_lstm !')
+                exit(0)
         timestamp = str(int(time.time()))
         out_dir = os.path.abspath(os.path.join(FLAGS.out_dir, "runs", timestamp))
         print("Writing to {}\n".format(out_dir))
@@ -198,4 +203,4 @@ def train():
 
 
 if __name__ == '__main__':
-    train()
+    train(sys.argv[1])
