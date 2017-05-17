@@ -34,7 +34,7 @@ def train():
     # dropout_keep_prob, 保留一个神经元的概率，这个概率只在训练的时候用到, 默认为0.5
     tf.flags.DEFINE_float("dropout_keep_prob", 0.5, "Dropout keep probability (default: 0.5)")
     # batch_size, 每批读入样本的数量,默认为64
-    tf.flags.DEFINE_integer("batch_size", 256, "Batch Size (default: 64)")
+    tf.flags.DEFINE_integer("batch_size", 1000, "Batch Size (default: 64)")
     # max_sentence_length, 文本最大长度
     tf.flags.DEFINE_integer("max_sentence_length", 500, "max sentence length")
     # initial_learning_rate, 初始的学习率,默认为0.001
@@ -50,7 +50,7 @@ def train():
     # max_grad_norm, 梯度最大值, 超过则阶段, 默认为5
     tf.flags.DEFINE_integer('max_grad_norm', 5, 'max_grad_norm')
     # num_epochs, 每次训练读取的数据随机的次数,默认为10
-    tf.flags.DEFINE_integer("num_epochs", 20, "Number of training epochs (default: 10)")
+    tf.flags.DEFINE_integer("num_epochs", 100, "Number of training epochs (default: 10)")
     # valid_num, 训练数据中, 用于验证数据的数量
     tf.flags.DEFINE_integer('valid_num', 1000, 'num of validation')
     # show_every, 在每个固定迭代次数之后,输出结果
