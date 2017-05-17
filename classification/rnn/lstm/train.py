@@ -30,7 +30,7 @@ def train():
     # hidden_layer_num, 隐层数, 默认为3
     tf.flags.DEFINE_integer('hidden_layer_num', 3, 'LSTM hidden layer num')
     # hidden_neural_size, 隐层单元数, 默认为256
-    tf.flags.DEFINE_integer('hidden_neural_size', 256, 'LSTM hidden neural size')
+    tf.flags.DEFINE_integer('hidden_neural_size', 128, 'LSTM hidden neural size')
     # dropout_keep_prob, 保留一个神经元的概率，这个概率只在训练的时候用到, 默认为0.5
     tf.flags.DEFINE_float("dropout_keep_prob", 0.5, "Dropout keep probability (default: 0.5)")
     # batch_size, 每批读入样本的数量,默认为64
