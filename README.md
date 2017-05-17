@@ -16,11 +16,11 @@
         sudo easy_install pip
     * 4、安装 virtualenv
         pip install virtualenv
-    * 5、安装环境
+    * 5、创建项目的虚拟环境
         sh scripts/env_prepare.sh
-    * 6、更新环境
+    * 6、安装依赖包
         备注: 如果是GPU环境,需要将requiremens.txt中的tensorflow替换成tensorflow-gpu
-        sh scripts/env_update.sh
+        使用pip install xxx方式安装requiremens.txt下的依赖包
 
 
 ## 项目说明

@@ -33,6 +33,8 @@ sys.setdefaultencoding('utf-8')
 EOF
 fi
 
+pip install pip==1.5.6
+
 deactivate
 
 echo ${ECHO_EXT} "${Red}初始化完毕: ${Gre}${ENV_PATH}${RCol} <<<<<<"
