@@ -33,19 +33,6 @@ sys.setdefaultencoding('utf-8')
 EOF
 fi
 
-
-pip install pip
-
-# Ubuntu/Linux 64-bit, CPU only, Python 2.7
-
-export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.0.0-cp27-none-linux_x86_64.whl
-# Ubuntu/Linux 64-bit, GPU enabled, Python 2.7
-# Requires CUDA toolkit 8.0 and CuDNN v5. For other versions, see "Installing from sources" below.
-# export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.0.0-cp27-none-linux_x86_64.whl
-# Mac OS X, CPU only, Python 2.7:
-# export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.0.0-py2-none-any.whl
-pip install --upgrade $TF_BINARY_URL
-
 deactivate
 
 echo ${ECHO_EXT} "${Red}初始化完毕: ${Gre}${ENV_PATH}${RCol} <<<<<<"
