@@ -21,14 +21,14 @@ class TextCNN(object):
         self.min_learning_rate = config.min_learning_rate
         self.decay_rate = config.decay_rate
         self.decay_step = config.decay_step
-        self.num_step = config.num_step
+        self.sentence_length = config.sentence_length
         self.num_classes = config.num_classes
         self.num_filters = config.num_filters
         self.vocabulary_size = config.vocabulary_size
         self.embedding_dim = config.embedding_dim
         self.l2_reg_lambda = config.l2_reg_lambda
         # 输入占位符，输出占位符和dropout占位符
-        self.input_x = tf.placeholder(tf.int32, [None, self.num_step], name="input_x")
+        self.input_x = tf.placeholder(tf.int32, [None, self.sentence_length], name="input_x")
         self.input_y = tf.placeholder(tf.int32, [None, self.num_classes], name="input_y")
         # dropout_keep_prob是保留一个神经元的概率，这个概率只在训练的时候用到
         self.dropout_keep_prob = tf.placeholder(tf.float32, name="dropout_keep_prob")
@@ -74,7 +74,7 @@ class TextCNN(object):
                 # pooled的大小为[batch, 1, 1, num_filters]，
                 pooled = tf.nn.max_pool(
                     h,
-                    ksize=[1, self.num_step - filter_size + 1, 1, 1],
+                    ksize=[1, self.sentence_length - filter_size + 1, 1, 1],
                     strides=[1, 1, 1, 1],
                     padding='VALID',
                     name="pool")

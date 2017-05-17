@@ -16,7 +16,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.contrib import learn
 from constant import PROJECT_DIRECTORY
-from classification.cnn.text_cnn.data_helpers import load_data_and_labels, batch_iter
+from data.data_helpers import load_mr_polarity_data_and_labels, batch_iter
 from classification.cnn.text_cnn.text_cnn import TextCNN
 
 
@@ -27,10 +27,6 @@ def train():
     # 1、设置参数
     # num_classes, 分类的类别
     tf.flags.DEFINE_integer('num_classes', 2, 'class num')
-    # positive_data_file, 正样本训练数据所在路径
-    tf.flags.DEFINE_string("positive_data_file", os.path.join(PROJECT_DIRECTORY, "classification/cnn/text_cnn/data/rt-polaritydata/rt-polarity.pos"), "Data source for the positive data.")
-    # negative_data_file, 负样本训练数据所在路径
-    tf.flags.DEFINE_string("negative_data_file", os.path.join(PROJECT_DIRECTORY, "classification/cnn/text_cnn/data/rt-polaritydata/rt-polarity.neg"), "Data source for the positive data.")
     # embedding_dim, 每个词表表示成词向量的长度, 默认为128
     tf.flags.DEFINE_integer("embedding_dim", 128, "Dimensionality of character embedding (default: 128)")
     # filter_sizes, 每个卷积核的高度(宽度为embedding_dim大小), 默认为3,4,5
@@ -65,7 +61,7 @@ def train():
     tf.flags.DEFINE_integer("valid_every", 100, "Evaluate model on dev set after this many steps (default: 100)")
     # checkpoint_every, 在每个固定迭代次数之后,保存模型, 默认为100
     tf.flags.DEFINE_integer("checkpoint_every", 1000, "Save model after this many steps (default: 100)")
-    # out_dir, 在每个固定迭代次数之后,保存模型, 默认为100
+    # out_dir, 在每个固定迭代次数之后,保存模型
     tf.flags.DEFINE_string('out_dir', os.path.join(PROJECT_DIRECTORY, "classification/cnn/text_cnn/data/model"), "The path of saved model")
     # allow_soft_placement, 设置为True时, 如果你指定的设备不存在，允许TF自动分配设备
     tf.flags.DEFINE_boolean("allow_soft_placement", True, "Allow device soft device placement")
@@ -90,13 +86,13 @@ def train():
         decay_rate = FLAGS.decay_rate
         decay_step = FLAGS.decay_step
         batch_size = FLAGS.batch_size
-        num_step = FLAGS.max_sentence_length
+        sentence_length = FLAGS.max_sentence_length
         l2_reg_lambda = FLAGS.l2_reg_lambda
 
     # 2、数据准备
     # 2.1 加载数据
     print("Loading data...")
-    x, y = load_data_and_labels(FLAGS.positive_data_file, FLAGS.negative_data_file)
+    x, y = load_mr_polarity_data_and_labels()
 
     # 2.2建立词典
     # 获取最大的样本分词长度
@@ -123,13 +119,12 @@ def train():
 
     # 用于训练时的参数
     config = Config()
-    config.num_step = max_sentence_length
+    config.sentence_length = max_sentence_length
     config.vocabulary_size = len(vocab_processor.vocabulary_)
     # 用于验证时的参数
     valid_config = Config()
     valid_config.vocabulary_size = len(vocab_processor.vocabulary_)
-    valid_config.num_step = max_sentence_length
-    len(vocab_processor.vocabulary_)
+    valid_config.sentence_length = max_sentence_length
     valid_config.dropout_keep_prob = 1.0
 
     # 3、训练
@@ -158,7 +153,7 @@ def train():
                 os.makedirs(checkpoint_dir)
             # 保存全局变量
             saver = tf.train.Saver(tf.global_variables())
-            # 保存字段
+            # 保存字典
             vocab_processor.save(os.path.join(out_dir, "vocab"))
             # 全局变量初始化
             sess.run(tf.global_variables_initializer())
@@ -217,8 +212,6 @@ def train():
                     if step % FLAGS.checkpoint_every == 0:
                         path = saver.save(sess, checkpoint_prefix, step)
                         print("Saved model checkpoint to {}\n".format(path))
-                        # if step == 10000:
-                        #     exit()
 
 
 if __name__ == '__main__':

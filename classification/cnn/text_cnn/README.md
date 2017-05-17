@@ -2,15 +2,15 @@
 
     * Created on 2017年05月15日
     * author: MJ
-    * project: text
+    * project: text_cnn
 
 本项目是在原有的代码基础上进行适当的修改，并添加一些中文注释，方便广大读者理解TextCNN模型的使用
 
 
 ## 参考资料
     原paper：
-        - [Convolutional Neural Networks for Sentence Classification](http://arxiv.org/abs/1408.5882)
-        - [A Sensitivity Analysis of (and Practitioners' Guide to) Convolutional Neural Networks for Sentence Classification](http://arxiv.org/abs/1510.03820)
+         - [Convolutional Neural Networks for Sentence Classification](http://arxiv.org/abs/1408.5882)
+         - [A Sensitivity Analysis of (and Practitioners' Guide to) Convolutional Neural Networks for Sentence Classification](http://arxiv.org/abs/1510.03820)
     源代码：
         - https://github.com/dennybritz/cnn-text-classification-tf
     原博客：
@@ -133,6 +133,5 @@
         Saving evaluation to /Users/MJ/machine_learning/classification/cnn/text_cnn/data/model/runs/1494832207/checkpoints/../prediction.csv
 
     5、预测一条文本
-        注: 先在eval.py中设置checkpoint_dir的路径
+        注: 先在predict.py中设置checkpoint_dir的路径
         python classification/cnn/text_cnn/predict.py
-

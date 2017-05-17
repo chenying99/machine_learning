@@ -2,3 +2,8 @@
 .idea/
 *.pyc
 /classification/cnn/text_cnn/data/model/runs
+/data/news_sohusite_xml.dat
+/data/sogou_original_data
+/data/sogou_classification_segment_data
+/word2vec/data/model
+/classification/rnn/lstm/data/model/runs
