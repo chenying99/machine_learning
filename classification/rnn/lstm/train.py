@@ -34,7 +34,7 @@ def train():
     # dropout_keep_prob, 保留一个神经元的概率，这个概率只在训练的时候用到, 默认为0.5
     tf.flags.DEFINE_float("dropout_keep_prob", 0.5, "Dropout keep probability (default: 0.5)")
     # batch_size, 每批读入样本的数量,默认为64
-    tf.flags.DEFINE_integer("batch_size", 1000, "Batch Size (default: 64)")
+    tf.flags.DEFINE_integer("batch_size", 500, "Batch Size (default: 64)")
     # max_sentence_length, 文本最大长度
     tf.flags.DEFINE_integer("max_sentence_length", 500, "max sentence length")
     # initial_learning_rate, 初始的学习率,默认为0.001
