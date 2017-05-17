@@ -14,11 +14,11 @@ if p not in sys.path:
 import tensorflow as tf
 from tensorflow.contrib import learn
 import numpy as np
-from constant import PROJECT_DIRECTORY
+from constant import PROJECT_DIRECTORY, rt_polaritydata_label_list
 
 
 # checkpoint_dir, 训练时保存的模型
-tf.flags.DEFINE_string("checkpoint_dir", os.path.join(PROJECT_DIRECTORY, "classification/cnn/text_cnn/data/model/runs/1494832207/checkpoints"), "Checkpoint directory from training run")
+tf.flags.DEFINE_string("checkpoint_dir", os.path.join(PROJECT_DIRECTORY, "classification/cnn/text_cnn/data/model/runs/1495003179/checkpoints"), "Checkpoint directory from training run")
 # allow_soft_placement, 设置为True时, 如果你指定的设备不存在，允许TF自动分配设备
 tf.flags.DEFINE_boolean("allow_soft_placement", True, "Allow device soft device placement")
 # log_device_placement, 设备上放置操作日志的位置
@@ -33,16 +33,17 @@ for attr, value in sorted(FLAGS.__flags.items()):
 print("")
 
 
-def predict_doc(doc):
+def predict(text):
     """
     给定一个文本,预测文本的分类
     """
+    index2label_dict = {i: l.strip() for i, l in enumerate(rt_polaritydata_label_list)}
     # 加载词典
     vocab_path = os.path.join(FLAGS.checkpoint_dir, "..", "vocab")
     # 从给定文件恢复词汇处理器。
     vocab_processor = learn.preprocessing.VocabularyProcessor.restore(vocab_path)
     # 将评估数据根据词汇处理器转换成相应的格式
-    x_test = np.array(list(vocab_processor.transform([doc])))
+    x_test = np.array(list(vocab_processor.transform([text])))
     # 查找最新保存的检查点文件的文件名
     checkpoint_file = tf.train.latest_checkpoint(FLAGS.checkpoint_dir)
     graph = tf.Graph()
@@ -64,9 +65,9 @@ def predict_doc(doc):
             # 待评估的Tensors
             predictions = graph.get_operation_by_name("model/output/predictions").outputs[0]
             predict_class = sess.run(predictions, {input_x: x_test, dropout_keep_prob: 1.0})[0]
-            return predict_class
+            return index2label_dict.get(predict_class)
 
 
 if __name__ == '__main__':
-    print (predict_doc("a masterpiece four years in the making"))
-    print (predict_doc("everything is off."))
+    print (predict("a masterpiece four years in the making"))
+    print (predict("everything is off."))

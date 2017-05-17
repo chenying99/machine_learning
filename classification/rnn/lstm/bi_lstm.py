@@ -39,23 +39,7 @@ class BiLSTM(object):
         # dropout_keep_prob是保留一个神经元的概率，这个概率只在训练的时候用到
         self.dropout_keep_prob = tf.placeholder(tf.float32, name="dropout_keep_prob")
         variable_summaries(self.input_x)
-        def fw_lstm_cell():
-            # Forward的LSTM单元
-            fw_lstm_cell = tf.contrib.rnn.LSTMCell(self.hidden_neural_size, forget_bias=2.0)
-            fw_lstm_cell = tf.contrib.rnn.DropoutWrapper(fw_lstm_cell, output_keep_prob=self.dropout_keep_prob)
-            return fw_lstm_cell
-        def bw_lstm_cell():
-            # Backward的LSTM单元
-            bw_lstm_cell = tf.contrib.rnn.LSTMCell(self.hidden_neural_size, forget_bias=2.0)
-            bw_lstm_cell = tf.contrib.rnn.DropoutWrapper(bw_lstm_cell, output_keep_prob=self.dropout_keep_prob)
-            return bw_lstm_cell
 
-        if self.hidden_layer_num > 1:
-            fw_lstm_cells = tf.contrib.rnn.MultiRNNCell([fw_lstm_cell() for _ in range(self.hidden_layer_num)], state_is_tuple=True)
-            bw_lstm_cells = tf.contrib.rnn.MultiRNNCell([bw_lstm_cell() for _ in range(self.hidden_layer_num)], state_is_tuple=True)
-        else:
-            fw_lstm_cells = fw_lstm_cell()
-            bw_lstm_cells = bw_lstm_cell()
         # embedding层
         with tf.device("/cpu:0"), tf.name_scope("embedding_layer"):
             # W是在训练时得到的嵌入矩阵，通过随机均匀分布进行初始化
@@ -76,6 +60,26 @@ class BiLSTM(object):
             inputs = tf.reshape(inputs, [-1, self.embedding_dim])
             # 3、将x拆成长度为n_steps的列表,列表中的每个tensor的尺寸都是(batch_size, n_input)
             inputs = tf.split(inputs, self.num_step, 0)
+            variable_summaries(self.input_x)
+
+        def fw_lstm_cell():
+            # Forward的LSTM单元
+            lstm_cell = tf.contrib.rnn.LSTMCell(self.hidden_neural_size, forget_bias=2.0)
+            lstm_cell = tf.contrib.rnn.DropoutWrapper(lstm_cell, output_keep_prob=self.dropout_keep_prob)
+            return lstm_cell
+
+        def bw_lstm_cell():
+            # Backward的LSTM单元
+            lstm_cell = tf.contrib.rnn.LSTMCell(self.hidden_neural_size, forget_bias=2.0)
+            lstm_cell = tf.contrib.rnn.DropoutWrapper(lstm_cell, output_keep_prob=self.dropout_keep_prob)
+            return lstm_cell
+
+        if self.hidden_layer_num > 1:
+            fw_lstm_cells = tf.contrib.rnn.MultiRNNCell([fw_lstm_cell() for _ in range(self.hidden_layer_num)], state_is_tuple=True)
+            bw_lstm_cells = tf.contrib.rnn.MultiRNNCell([bw_lstm_cell() for _ in range(self.hidden_layer_num)], state_is_tuple=True)
+        else:
+            fw_lstm_cells = fw_lstm_cell()
+            bw_lstm_cells = bw_lstm_cell()
 
         # 获取LSTM单元输出outputs
         outputs, _, _ = tf.contrib.rnn.static_bidirectional_rnn(fw_lstm_cells, bw_lstm_cells, inputs, dtype=tf.float32)

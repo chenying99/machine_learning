@@ -90,7 +90,7 @@ def train():
     # 2.1 加载数据
     print("Loading data...")
     x, y, max_sentence_length = load_sogou_classification_data_and_labels(FLAGS.max_sentence_length)
-
+    print ('max_sentence_length: %d' % max_sentence_length)
     # 2.2获取word2vec
     word2vec = get_word_2_vec_by_gensim_for_sogou_classification()
 

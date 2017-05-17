@@ -124,14 +124,6 @@
         Train, epoch 20, step 3290, lr 0.000512, loss 0.00794089, acc 1, step-time 0.307061, examples/sec 208.428
         Train, epoch 20, step 3300, lr 0.000512, loss 0.0155414, acc 1, step-time 0.303007, examples/sec 211.216
         Valid, step 3300, lr 0.000512, loss 0.747256, acc 0.767
-    4、评估
-        注: 先在eval.py中设置checkpoint_dir的路径
-        python classification/cnn/text_cnn/eval.py
-        输出示例:
-        Total number of test examples: 10662
-        Accuracy: 0.977772
-        Saving evaluation to /Users/MJ/machine_learning/classification/cnn/text_cnn/data/model/runs/1494832207/checkpoints/../prediction.csv
-
-    5、预测一条文本
+    4、预测
         注: 先在predict.py中设置checkpoint_dir的路径
         python classification/cnn/text_cnn/predict.py

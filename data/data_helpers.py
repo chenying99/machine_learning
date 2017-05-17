@@ -13,9 +13,7 @@ if p not in sys.path:
     sys.path.append(p)
 import numpy as np
 import re
-import jieba
-import collections
-from constant import PROJECT_DIRECTORY, sogou_classification_label_list
+from constant import PROJECT_DIRECTORY, rt_polaritydata_label_list, sogou_classification_label_list
 from data.prepare import segment_sogou_classification_data
 from word2vec.data_convert import get_text_converter_for_sogou_classification
 
@@ -57,8 +55,13 @@ def load_mr_polarity_data_and_labels():
     x_text = positive_examples + negative_examples
     x_text = [clean_str(sent) for sent in x_text]
     # 生成label
-    positive_labels = [[0, 1] for _ in positive_examples]
-    negative_labels = [[1, 0] for _ in negative_examples]
+    label2index_dict = {l.strip(): i for i, l in enumerate(rt_polaritydata_label_list)}
+    label_item = np.zeros(len(rt_polaritydata_label_list), np.float32)
+    label_item[label2index_dict['pos']] = 1
+    positive_labels = [label_item for _ in positive_examples]
+    label_item = np.zeros(len(rt_polaritydata_label_list), np.float32)
+    label_item[label2index_dict['neg']] = 1
+    negative_labels = [label_item for _ in negative_examples]
     y = np.concatenate([positive_labels, negative_labels], 0)
     return [x_text, y]
 

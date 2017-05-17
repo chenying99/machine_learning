@@ -13,6 +13,8 @@ WORD_2_VEC_DATA = 'word2vec/data'
 WORD_2_VEC_MODEL = 'word2vec/data/model'
 MAX_DOCUMENT_LENGTH = 50
 
+rt_polaritydata_label_list = ['pos', 'neg']
+
 sogou_classification_label_list = ['IT', '体育', '健康', '军事', '招聘', '教育', '文化', '旅游', '财经']
 
 sogou_classification_data_label_dict = {
