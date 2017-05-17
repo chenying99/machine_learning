@@ -25,8 +25,8 @@ def train():
     # 1、设置参数
     # num_classes, 分类的类别
     tf.flags.DEFINE_integer('num_classes', 9, 'class num')
-    # embedding_dim, 每个词表表示成词向量的长度, 默认为128
-    tf.flags.DEFINE_integer("embedding_dim", 256, "Dimensionality of character embedding (default: 128)")
+    # embedding_dim, 每个词表表示成词向量的长度
+    tf.flags.DEFINE_integer("embedding_dim", 128, "Dimensionality of character embedding (default: 128)")
     # hidden_layer_num, 隐层数, 默认为3
     tf.flags.DEFINE_integer('hidden_layer_num', 3, 'LSTM hidden layer num')
     # hidden_neural_size, 隐层单元数, 默认为256
@@ -36,7 +36,7 @@ def train():
     # batch_size, 每批读入样本的数量,默认为64
     tf.flags.DEFINE_integer("batch_size", 1000, "Batch Size (default: 64)")
     # max_sentence_length, 文本最大长度
-    tf.flags.DEFINE_integer("max_sentence_length", 500, "max sentence length")
+    tf.flags.DEFINE_integer("max_sentence_length", 1000, "max sentence length")
     # initial_learning_rate, 初始的学习率,默认为0.001
     tf.flags.DEFINE_float('initial_learning_rate', 0.001, 'init learning rate')
     # min_learning_rate, 学习率最小值,默认为0.00001

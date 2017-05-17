@@ -1,6 +1,6 @@
 # 中文文档
 
-    * Created on 2017年05月15日
+    * Created on 2017年05月16日
     * author: MJ
     * project: lstm
 
