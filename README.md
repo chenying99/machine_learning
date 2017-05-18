@@ -4,7 +4,7 @@
     * author: MJ
     * project: machine_learning
     * 本人会陆续将自己使用过的机器学习算法示例进行整理,欢迎各位读者挑错指正,如果对你有帮助,请给个star哦!
-      如果你想与更多的小伙伴们交流,可以加以下几个QQ群:
+      如果你对此项目有任何疑问, 本人将在下几个QQ群给予答疑解惑:
       TensorFlow深度学习交流NLP群(299814789)
       TensorFlow深度学习交流CV群(397163918)
 
@@ -28,4 +28,6 @@
     * cnn (卷积神经网络)
         * text_cnn (用于文本分类的TextCNN模型)
             详情见text_cnn下的README.md
-
+    * rnn (循环神经网络)
+        * lstm (用于文本分类的lstm/bi-lstm模型)
+            详情见lstm下的README.md
